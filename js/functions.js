@@ -88,9 +88,9 @@ function startHeartAnimation() {
 
 function timeElapse(c) {
 	var e = Date();
-	console.log(c)
+	// console.log(c)
 	var f = (Date.parse(e) - Date.parse(c)) / 1000;
-	console.log(f)
+	// console.log(f)
 	var g = Math.floor(f / (3600 * 24));
 	f = f % (3600 * 24);
 	var b = Math.floor(f / 3600);
@@ -106,14 +106,14 @@ function timeElapse(c) {
 	if (f < 10) {
 		f = "0" + f
 	}
-	console.log(g)
+	// console.log(g)
 	var a = '<span class="digit">' + g + '</span> days <span class="digit">' + b + '</span> hours <span class="digit">' + d + '</span> minutes <span class="digit">' + f + "</span> seconds";
 	$("#elapseClock").html(a)
 }
 
 function showMessages() {
 	adjustWordsPosition();
-	$("#messages").fadeIn(5000, function() {
+	$("#messages").fadeIn(3000, function() {
 		showLoveU()
 	})
 }
