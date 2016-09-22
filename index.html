@@ -23,11 +23,11 @@ div.btnbg {
 .connect {
     position:absolute;
     color:#fff;
-    font-size: 18px;
+    font-size: 24px;
     font-style: oblique;
     text-align: center;
     width:100%;
-    top: 38%;
+    top: 30%;
     font-family: "楷体";
 }
 .connect a{
@@ -37,35 +37,36 @@ div.btnbg {
 .connect a:hover{
   color:red;
 }
-.title {
-   position:absolute;
-    color:#fff;
-    font-size: 32px;
-    font-family: "楷体";
-    text-align: center;
-    width:100%;
-    top: 10%;
-}
 @media screen and (max-width: 400px) {
    .connect {
-    font-size: 14px;
-   }
-   .title {
     font-size: 18px;
    }
+
+}
+.foot {
+    position:absolute;
+    color:red;
+    top:95%;
+    text-align: center;
+    width:100%;
+    font-family: "楷体";
 }
 </style>
 <body>
-<div class='title'>
-    <p>淡晨的网络日志<p>
-</div>
-<div class="connect" > 
 
+<div class="connect" >  
+    <div style="width:100%; text-align:center; overflow:hidden;">
+    <img style="width:150px;height:150px;border-radius:50%;"src="image/danchen.jpg" alt="淡晨·天津" />
+    </div>
+    <div style="margin-top:20px">
     <a>个人主页</a>/<a>博客日志</a>/<a href="love.html">爱的小屋</a>
     <p >If we can only encounter each other rather than stay with each other,then I wish we had never encountered.</p>
     <p style="margin-top:20px;">如果只是遇见，不能停留，不如不遇见。</p>
+    </div>
 </div>
-
+<div class="foot">
+    <p>本网站信息和资源仅供学习和交流</p>
+</div>
 <canvas id="sakura"></canvas>
 <div class="btnbg">
 </div>
