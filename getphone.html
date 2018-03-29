@@ -21,7 +21,7 @@
         }
         function getPhone(e,keywords,groupKey,count,time,lianghao) {
             $.ajax({
-                url:'https://m.10010.com/NumApp/NumberCenter/qryNum?provinceCode=36&cityCode=360&monthFeeLimit=0&groupKey='+groupKey+'&searchCategory=3&net=02&amounts=200000&codeTypeCode&searchValue&qryType=02&goodsNet=2',
+                url:'https://m.10010.com/NumApp/NumberCenter/qryNum?provinceCode=36&cityCode=360&monthFeeLimit=0&groupKey='+groupKey+'&searchCategory=3&net=02&amounts=200000&codeTypeCode&searchValue='+$('#wkeywords').val()+'&qryType=02&goodsNet=2',
                 type:'GET', //GET
                 async:true,    //或false,是否异步
                 timeout:5000,    //超时时间
@@ -262,7 +262,8 @@
         <p style="display:inline"><input id = "xxABxxAB" type="checkbox" name="rule" checked="checked" />xxABxxAB</p>
     </div>
     <div>
-        <input id="keywords" style="height:40px;width: 200px;font-size: 28px"></input>
+        <input id="keywords" style="height:40px;width: 200px;font-size: 28px" placeholder="全位数比对"></input>
+        <input id="wkeywords" style="height:40px;width: 200px;font-size: 28px" placeholder="尾四位比对"></input>
     </div>
     <div style="margin-top: 10px">
         <button type="button" onclick="loadAjax(1)" style="height:40px;font-size: 16px">获取靓号（10次）</button>
