@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>腾讯大王卡靓号查询</title>
+    <div id="myDiv"><h3>获取靓号小程序</h3></div>
+    <div>
+        <input id="r1" type="radio" value="0" name="chose" checked >大王卡</input>
+        <input id="r2" type="radio" value="1" name="chose">天王卡</input>
+    </div>
+    <div>
+        <input id="keywords"></input>
+        <button type="button" onclick="loadAjax(1)">获取靓号</button>
+        <button type="button" onclick="loadAjax(2)">自动搜索</button>
+    </div>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+        function loadAjax(e) {
+            $('#phonelist').html("");
+            $('#lianghao').html("");
+            $('#message').html("");
+            var keywords = $('#keywords').val();
+            var groupKey = 60236866;
+            if($('input:radio:checked').val() == 1){
+                groupKey = 32258900;
+            }
+            var count = 0 ;
+            getPhone(e,keywords,groupKey,count);
+        }
+        function getPhone(e,keywords,groupKey,count) {
+            $.ajax({
+                url:'https://m.10010.com/NumApp/NumberCenter/qryNum?provinceCode=36&cityCode=360&monthFeeLimit=0&groupKey='+groupKey+'&searchCategory=3&net=02&amounts=200000&codeTypeCode&searchValue&qryType=02&goodsNet=2',
+                type:'GET', //GET
+                async:true,    //或false,是否异步
+                timeout:5000,    //超时时间
+                dataType:'jsonp',    //返回的数据格式：json/xml/html/script/jsonp/text
+                beforeSend:function(xhr){
+//                    $('#message').html("第"+e+"次查询中……");
+                },
+                success:function(data,textStatus,jqXHR){
+                    for(let i=0;i<data.numArray.length;i++ ){
+                        if(data.numArray[i].toString().length == 11){
+                            console.log(data.numArray[i]);
+                            count = Number(count) + 1 ;
+                            $('#message').html("第"+e+"次查询中……已累计查询"+Number(count)+"个手机号");
+                            if(data.numArray[i].toString().indexOf(keywords) != -1){
+                                $('#phonelist').append(data.numArray[i]+"<br/>");
+                                return false ;
+                            }else{
+                                var result = isLianghao(data.numArray[i]);
+                                if(result){
+                                    $('#lianghao').append(result+","+data.numArray[i]+"<br/>");
+                                }
+                            }
+                        }
+                    }
+//                    console.log($('#phonelist').html(),e);
+                    if(e>1 &&  e<9999999999){
+                        e++;
+                        sleep(3000);
+                        getPhone(e,keywords,groupKey,Number(count));
+                        return false
+                    }
+                    $('#message').html("<br/>"+"搜索完毕！");
+                },
+                error:function(xhr,textStatus){
+                    sleep(10000);
+                    getPhone(e,keywords,groupKey,Number(count));
+                },
+                complete:function(){
+                }
+            })
+        }
+
+
+        function isLianghao(tel) {
+            var phone1 = tel.toString().substring(3,7) ;
+            var phone2 = tel.toString().substring(7,12) ;
+
+            var reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d", "g");
+            if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                //ABCD
+                return 'ABCD';
+            }
+
+            reg = new RegExp("(\\d)((?!\\1)\\d)\\2[\\d]", "g");
+            if (phone1.match(reg) != null) {
+                var result1 = phone1.match(reg).toString();
+                if (result1.substring(0, 1) == result1.substring(3, 4)) {
+                    //ABBA
+                    return 'ABBA';
+                }
+            }
+            if(phone2.match(reg) != null) {
+                var result2 = phone2.match(reg).toString();
+                if (result2.substring(0, 1) == result2.substring(3, 4)) {
+                    //ABBA
+                    return 'ABBA';
+                }
+            }
+
+            reg = new RegExp("(\\d)((?!\\1)\\d)\\1\\2", "g");
+            if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                //ABAB
+                return 'ABAB';
+            }
+
+            reg = new RegExp("(\\d)\\1((?!\\1)\\d)\\2", "g");
+            if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                //AABB
+                return 'AABB';
+            }
+
+
+            return false;
+
+        }
+        function sleep(n){
+            var start=new Date().getTime();//定义起始时间的毫秒数
+            while(true){
+                var time=new Date().getTime();//每次执行循环取得一次当前时间的毫秒数
+                if(time-start>n){//如果当前时间的毫秒数减去起始时间的毫秒数大于给定的毫秒数，即结束循环
+                    break;
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div id="message" style="color: #af5b00"></div>
+<div id="phonelist"></div>
+<div id="lianghao" style="color: #af5b00"></div>
+</body>
+</html>
