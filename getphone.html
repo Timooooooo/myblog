@@ -9,6 +9,26 @@
         <input id="r2" type="radio" value="1" name="chose">天王卡</input>
     </div>
     <div>
+        <p style="display:inline"><input id = "AAA" type="checkbox" name="rule" checked="checked" />AAA</p>
+        <p style="display:inline"><input id = "ABCD" type="checkbox" name="rule" checked="checked" />ABCD</p>
+        <p style="display:inline"><input id = "ABC" type="checkbox" name="rule" checked="checked" />ABC</p>
+    </div>
+    <div >
+        <p style="display:inline"><input id = "ABBA" type="checkbox" name="rule" checked="checked" />ABBA</p>
+        <p style="display:inline"><input id = "ABAB" type="checkbox" name="rule" checked="checked" />ABAB</p>
+        <p style="display:inline"><input id = "AABB" type="checkbox" name="rule" checked="checked" />AABB</p>
+    </div>
+    <div>
+        <p style="display:inline"><input id = "ABCDEF" type="checkbox" name="rule" checked="checked" />ABCDEF</p>
+        <p style="display:inline"><input id = "ABCxxABC" type="checkbox" name="rule" checked="checked" />ABCxxABC</p>
+        <p style="display:inline"><input id = "ABCAB" type="checkbox" name="rule" checked="checked" />ABCAB</p>
+    </div>
+    <div>
+        <p style="display:inline"><input id = "ABCDABCD" type="checkbox" name="rule" checked="checked" />ABCDABCD</p>
+        <p style="display:inline"><input id = "ABxxABxx" type="checkbox" name="rule" checked="checked" />ABxxABxx</p>
+        <p style="display:inline"><input id = "xxABxxAB" type="checkbox" name="rule" checked="checked" />xxABxxAB</p>
+    </div>
+    <div>
         <input id="keywords"></input>
         <button type="button" onclick="loadAjax(1)">获取靓号</button>
         <button type="button" onclick="loadAjax(2)">自动搜索</button>
@@ -43,7 +63,7 @@
                             console.log(data.numArray[i]);
                             count = Number(count) + 1 ;
                             $('#message').html("第"+e+"次查询中……已累计查询"+Number(count)+"个手机号");
-                            if(data.numArray[i].toString().indexOf(keywords) != -1){
+                            if(data.numArray[i].toString().substring(3,7).indexOf(keywords) != -1 || data.numArray[i].toString().substring(7,12).indexOf(keywords) != -1){
                                 $('#phonelist').append(data.numArray[i]+"<br/>");
                                 return false ;
                             }else{
@@ -72,46 +92,131 @@
             })
         }
 
-
         function isLianghao(tel) {
+            var phone = tel.toString();
             var phone1 = tel.toString().substring(3,7) ;
             var phone2 = tel.toString().substring(7,12) ;
-
-            var reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d", "g");
-            if (phone1.match(reg) != null || phone2.match(reg) != null) {
-                //ABCD
-                return 'ABCD';
-            }
-
-            reg = new RegExp("(\\d)((?!\\1)\\d)\\2[\\d]", "g");
-            if (phone1.match(reg) != null) {
-                var result1 = phone1.match(reg).toString();
-                if (result1.substring(0, 1) == result1.substring(3, 4)) {
-                    //ABBA
-                    return 'ABBA';
+            var reg = "";
+            if($('#AAA').is(':checked')) {
+                reg = new RegExp('(.)\\1{2}', "g");
+                if (phone.match(reg) != null) {
+                    //AAA
+                    return 'AAA';
                 }
             }
-            if(phone2.match(reg) != null) {
-                var result2 = phone2.match(reg).toString();
-                if (result2.substring(0, 1) == result2.substring(3, 4)) {
-                    //ABBA
-                    return 'ABBA';
+            if($('#ABCD').is(':checked')){
+                reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d", "g");
+                if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                    //ABCD
+                    return 'ABCD';
+                }
+            }
+            if($('#ABC').is(':checked')){
+                reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d", "g");
+                if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                    //ABC
+                    return 'ABC';
+                }
+            }
+            if($('#ABBA').is(':checked')) {
+                reg = new RegExp("(\\d)((?!\\1)\\d)\\2[\\d]", "g");
+                if (phone1.match(reg) != null) {
+                    var result1 = phone1.match(reg).toString();
+                    if (result1.substring(0, 1) == result1.substring(3, 4)) {
+                        //ABBA
+                        return 'ABBA';
+                    }
+                }
+                if (phone2.match(reg) != null) {
+                    var result2 = phone2.match(reg).toString();
+                    if (result2.substring(0, 1) == result2.substring(3, 4)) {
+                        //ABBA
+                        return 'ABBA';
+                    }
+                }
+            }
+            if($('#ABAB').is(':checked')) {
+                reg = new RegExp("(\\d)((?!\\1)\\d)\\1\\2", "g");
+                if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                    //ABAB
+                    return 'ABAB';
+                }
+            }
+            if($('#AABB').is(':checked')) {
+                reg = new RegExp("(\\d)\\1((?!\\1)\\d)\\2", "g");
+                if (phone1.match(reg) != null || phone2.match(reg) != null) {
+                    //AABB
+                    return 'AABB';
+                }
+            }
+            if($('#ABCDEF').is(':checked')) {
+                reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){5}\\d", "g");
+                if (phone.match(reg) != null) {
+                    //ABCDEF
+                    return 'ABCDEF';
+                }
+            }
+            if($('#ABCxxABC').is(':checked')) {
+                reg = new RegExp("^(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d[\\d][\\d](?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d", "g");
+                if (phone.match(reg) != null) {
+                    var result = phone.match(reg).toString();
+                    if (result.substring(0, 3) == result.substring(5,8)) {
+                        //ABCxxABC
+                        return 'ABCxxABC';
+                    }
+                }
+            }
+            if($('#ABCABC').is(':checked')) {
+                reg = new RegExp("^(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d{4}", "g");
+                if (phone.match(reg) != null) {
+                    var result = phone.match(reg).toString();
+                    if (result.substring(0, 3) == result.substring(3, 6)) {
+                        //ABCABC
+                        return 'ABCABC';
+                    }
+                }
+            }
+            if($('#ABCAB').is(':checked')) {
+                reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){2}\\d{3}", "g");
+                if (phone.match(reg) != null) {
+                    var result = phone.match(reg).toString();
+                    if (result.substring(0, 2) == result.substring(3, 5)) {
+                        //ABCAB
+                        return 'ABCAB';
+                    }
+                }
+            }
+            if($('#ABCDABCD').is(':checked')) {
+                reg = new RegExp("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d{5}", "g");
+                if (phone.match(reg) != null) {
+                    var result = phone.match(reg).toString();
+                    if (result.substring(0, 4) == result.substring(4, 8)) {
+                        //ABCDABCD
+                        return 'ABCDABCD';
+                    }
+                }
+            }
+            if($('#ABxxABxx').is(':checked')) {
+                reg = new RegExp("^(\\d)((?!\\1)\\d)[\\d][\\d](\\d)((?!\\1)\\d)[\\d][\\d]", "g");
+                if (phone.match(reg) != null) {
+                    var result = phone.match(reg).toString();
+                    if (result.substring(0, 2) == result.substring(4, 6)) {
+                        //ABxxABxx
+                        return 'ABxxABxx';
+                    }
                 }
             }
 
-            reg = new RegExp("(\\d)((?!\\1)\\d)\\1\\2", "g");
-            if (phone1.match(reg) != null || phone2.match(reg) != null) {
-                //ABAB
-                return 'ABAB';
+            if($('#xxABxxAB').is(':checked')) {
+                reg = new RegExp("[\\d][\\d](\\d)((?!\\1)\\d)[\\d][\\d](\\d)((?!\\1)\\d)$", "g");
+                if (phone.match(reg) != null) {
+                    var result = phone.match(reg).toString();
+                    if (result.substring(2, 4) == result.substring(6, 8)) {
+                        //ABxxABxx
+                        return 'xxABxxAB';
+                    }
+                }
             }
-
-            reg = new RegExp("(\\d)\\1((?!\\1)\\d)\\2", "g");
-            if (phone1.match(reg) != null || phone2.match(reg) != null) {
-                //AABB
-                return 'AABB';
-            }
-
-
             return false;
 
         }
