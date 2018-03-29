@@ -34,19 +34,37 @@
                         if(data.numArray[i].toString().length == 11){
                             count = Number(count) + 1 ;
                             $('#message').html("第"+time+"次查询中……已累计查询"+Number(count)+"个手机号");
-                            if(data.numArray[i].toString().substring(3,7).indexOf(keywords) != -1 || data.numArray[i].toString().substring(7,12).indexOf(keywords) != -1){
-                                $('#phonelist').append(data.numArray[i]+"<br/>");
-                                if( e == 2){
-                                    $('#message').html("搜索完毕！累计完成"+time+"次查询，累计对比"+Number(count)+"条手机号");
-                                    return false ;
-                                }
+                            if(keywords.toString().length>4){
+                                if(data.numArray[i].toString().indexOf(keywords) != -1){
+                                    $('#phonelist').append(data.numArray[i]+"<br/>");
+                                    if( e == 2){
+                                        $('#message').html("搜索完毕！累计完成"+time+"次查询，累计对比"+Number(count)+"条手机号");
+                                        return false ;
+                                    }
 
+                                }else{
+                                    var result = isLianghao(data.numArray[i]);
+                                    if(result){
+                                        $('#lianghao').append(result+","+data.numArray[i]+"<br/>");
+                                    }
+                                }
                             }else{
-                                var result = isLianghao(data.numArray[i]);
-                                if(result){
-                                    $('#lianghao').append(result+","+data.numArray[i]+"<br/>");
+                                if(data.numArray[i].toString().substring(3,7).indexOf(keywords) != -1 || data.numArray[i].toString().substring(7,12).indexOf(keywords) != -1){
+                                    $('#phonelist').append(data.numArray[i]+"<br/>");
+                                    if( e == 2){
+                                        $('#message').html("搜索完毕！累计完成"+time+"次查询，累计对比"+Number(count)+"条手机号");
+                                        return false ;
+                                    }
+
+                                }else{
+                                    var result = isLianghao(data.numArray[i]);
+                                    if(result){
+                                        $('#lianghao').append(result+","+data.numArray[i]+"<br/>");
+                                    }
                                 }
                             }
+
+
                         }
                     }
 //                    console.log($('#phonelist').html(),e);
