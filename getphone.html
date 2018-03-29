@@ -3,40 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>腾讯大王卡靓号查询</title>
-    <div id="myDiv">
-        <h3>获取靓号小程序</h3>
-        <p>黑色号码为关键字查询结果，红色号码为靓号规则查询结果</p>
-    </div>
-    <div>
-        <input id="r1" type="radio" value="0" name="chose" checked >大王卡</input>
-        <input id="r2" type="radio" value="1" name="chose">天王卡</input>
-    </div>
-    <div>
-        <p style="display:inline"><input id = "AAA" type="checkbox" name="rule" checked="checked" />AAA</p>
-        <p style="display:inline"><input id = "ABCD" type="checkbox" name="rule" checked="checked" />ABCD</p>
-        <p style="display:inline"><input id = "ABC" type="checkbox" name="rule" checked="checked" />ABC</p>
-    </div>
-    <div >
-        <p style="display:inline"><input id = "ABBA" type="checkbox" name="rule" checked="checked" />ABBA</p>
-        <p style="display:inline"><input id = "ABAB" type="checkbox" name="rule" checked="checked" />ABAB</p>
-        <p style="display:inline"><input id = "AABB" type="checkbox" name="rule" checked="checked" />AABB</p>
-    </div>
-    <div>
-        <p style="display:inline"><input id = "ABCDEF" type="checkbox" name="rule" checked="checked" />ABCDEF</p>
-        <p style="display:inline"><input id = "ABCxxABC" type="checkbox" name="rule" checked="checked" />ABCxxABC</p>
-        <p style="display:inline"><input id = "ABCAB" type="checkbox" name="rule" checked="checked" />ABCAB</p>
-    </div>
-    <div>
-        <p style="display:inline"><input id = "ABCDABCD" type="checkbox" name="rule" checked="checked" />ABCDABCD</p>
-        <p style="display:inline"><input id = "ABxxABxx" type="checkbox" name="rule" checked="checked" />ABxxABxx</p>
-        <p style="display:inline"><input id = "xxABxxAB" type="checkbox" name="rule" checked="checked" />xxABxxAB</p>
-    </div>
-    <div>
-        <input id="keywords"></input>
-        <button type="button" onclick="loadAjax(1)">获取靓号（10次）</button>
-        <button type="button" onclick="loadAjax(2)">自动搜索（搜到即停）</button>
-        <button type="button" onclick="loadAjax(3)">无限搜索（永不停息）</button>
-    </div>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript">
         function loadAjax(e) {
@@ -50,9 +16,10 @@
             }
             var count = 0 ;
             var time = 1 ;
-            getPhone(e,keywords,groupKey,count,time);
+            var lianghao = 1 ;
+            getPhone(e,keywords,groupKey,count,time,lianghao);
         }
-        function getPhone(e,keywords,groupKey,count,time) {
+        function getPhone(e,keywords,groupKey,count,time,lianghao) {
             $.ajax({
                 url:'https://m.10010.com/NumApp/NumberCenter/qryNum?provinceCode=36&cityCode=360&monthFeeLimit=0&groupKey='+groupKey+'&searchCategory=3&net=02&amounts=200000&codeTypeCode&searchValue&qryType=02&goodsNet=2',
                 type:'GET', //GET
@@ -86,7 +53,7 @@
                     if(e==1 && $('#phonelist').html() =="" && time <10){
                         time++;
                         sleep(3000);
-                        getPhone(e,keywords,groupKey,Number(count),time);
+                        getPhone(e,keywords,groupKey,Number(count),time,lianghao);
                         return false
                     }
                     if(e!==1 && time <9999999){
@@ -99,7 +66,7 @@
                 },
                 error:function(xhr,textStatus){
                     sleep(10000);
-                    getPhone(e,keywords,groupKey,Number(count),time);
+                    getPhone(e,keywords,groupKey,Number(count),time,lianghao);
                 },
                 complete:function(){
                 }
@@ -247,8 +214,46 @@
     </script>
 </head>
 <body>
-<div id="message" style="color: #af5b00"></div>
-<div id="phonelist"></div>
-<div id="lianghao" style="color: #af5b00"></div>
+<div style="text-align: center;">
+    <div id="myDiv" >
+        <h3>获取靓号小程序</h3>
+        <p>黑色号码为关键字查询结果，红色号码为靓号规则查询结果</p>
+    </div>
+    <div>
+        <input id="r1" type="radio" value="0" name="chose" checked >大王卡</input>
+        <input id="r2" type="radio" value="1" name="chose">天王卡</input>
+    </div>
+    <div>
+        <p style="display:inline"><input id = "AAA" type="checkbox" name="rule" checked="checked" />AAA</p>
+        <p style="display:inline"><input id = "ABCD" type="checkbox" name="rule" checked="checked" />ABCD</p>
+        <p style="display:inline"><input id = "ABC" type="checkbox" name="rule" checked="checked" />ABC</p>
+    </div>
+    <div >
+        <p style="display:inline"><input id = "ABBA" type="checkbox" name="rule" checked="checked" />ABBA</p>
+        <p style="display:inline"><input id = "ABAB" type="checkbox" name="rule" checked="checked" />ABAB</p>
+        <p style="display:inline"><input id = "AABB" type="checkbox" name="rule" checked="checked" />AABB</p>
+    </div>
+    <div>
+        <p style="display:inline"><input id = "ABCDEF" type="checkbox" name="rule" checked="checked" />ABCDEF</p>
+        <p style="display:inline"><input id = "ABCxxABC" type="checkbox" name="rule" checked="checked" />ABCxxABC</p>
+        <p style="display:inline"><input id = "ABCAB" type="checkbox" name="rule" checked="checked" />ABCAB</p>
+    </div>
+    <div>
+        <p style="display:inline"><input id = "ABCDABCD" type="checkbox" name="rule" checked="checked" />ABCDABCD</p>
+        <p style="display:inline"><input id = "ABxxABxx" type="checkbox" name="rule" checked="checked" />ABxxABxx</p>
+        <p style="display:inline"><input id = "xxABxxAB" type="checkbox" name="rule" checked="checked" />xxABxxAB</p>
+    </div>
+    <div>
+        <input id="keywords" style="height:40px;width: 200px;font-size: 28px"></input>
+    </div>
+    <div style="margin-top: 10px">
+        <button type="button" onclick="loadAjax(1)" style="height:40px;font-size: 16px">获取靓号（10次）</button>
+        <button type="button" onclick="loadAjax(2)" style="height:40px;font-size: 16px">自动搜索（搜到即停）</button>
+        <button type="button" onclick="loadAjax(3)" style="height:40px;font-size: 16px">无限搜索（永不停息）</button>
+    </div>
+    <div id="message" style="color: #af5b00"></div>
+    <div id="phonelist"></div>
+    <div id="lianghao" style="color: #af5b00"></div>
+</div>
 </body>
 </html>
