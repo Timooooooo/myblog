@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>立印统计图表</title>
+</head>
+<style>
+    .echarts{
+        position: relative;
+    }
+</style>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="container1" name="过去12个月打印页数" class="echarts" style="height: 360px"></div>
+    <div id="container2" name="过去12个月打印金额" class="echarts" style="height: 360px"></div>
+    <div id="container3" name="过去12个月用户数量" class="echarts" style="height: 360px"></div>
+    <div id="container4" name="过去12个月店铺数量" class="echarts" style="height: 360px"></div>
+    <div id="container5" name="各省市自治区打印数量" class="echarts" style="height: 400px"></div>
+    <div id="container6" name="各文件类型打印页数" class="echarts" style="height: 400px"></div>
+
+    <!-- ECharts文件引入 -->
+    <script src="MyECharts/resource/ECharts/echarts.js"></script>
+    <script src="MyECharts/resource/MyECharts.js"></script>
+    <script src="http://gallery.echartsjs.com/dep/jquery/jquery.min.js"></script>
+    <script src="http://gallery.echartsjs.com/dep/echarts/map/js/china.js"></script>
+
+
+    <script type="text/javascript">
+        /**
+         * ajax获取服务器端数据
+         *
+         */
+        function getJson(url,type,data) {
+            var dataJson = $.ajax({
+                type: type,//这里是传输方式"POST"、"GET"
+                url: url,//这里是接口地址
+                data: data,//这里可以传用户ID或者openid，用来做身份标识，获取方式通过微信登录，"{ user_id: 1}"
+                dataType: "json",
+                success: function(res, textStatus, jqXHR){
+                    //这里的数据结构分析取决于后端
+                    if(res.code == '200'){
+                        return res.data;
+                    }else{
+                        console.log(res);
+                        return false;
+                    }
+                }
+            });
+        }
+
+        /**
+         * 过去12个月打印页数
+         * 折线图或者柱状图
+         *
+         */
+
+        var data1 = [
+            { group: '打印页数', name: '1月', value: 0 },
+            { group: '打印页数', name: '2月', value: 0 },
+            { group: '打印页数', name: '3月', value: 0 },
+            { group: '打印页数', name: '4月', value: 0 },
+            { group: '打印页数', name: '5月', value: 0 },
+            { group: '打印页数', name: '6月', value: 0 },
+            { group: '打印页数', name: '7月', value: 3000 },
+            { group: '打印页数', name: '8月', value: 5000 },
+            { group: '打印页数', name: '9月', value: 8000 },
+            { group: '打印页数', name: '10月', value: 9000 },
+            { group: '打印页数', name: '11月', value: 10000 },
+            { group: '打印页数', name: '12月', value: 12000 },
+
+        ];
+        //柱状图
+//        var opt1 = MyECharts.ChartOptionTemplates.Bar('过去12个月打印页数', '页', data1);
+//        MyECharts.RenderChart(opt1, 'container1');
+        //折线图
+        var opt1 = MyECharts.ChartOptionTemplates.Line('过去12个月打印页数', '页', data1);
+        MyECharts.RenderChart(opt1, 'container1');
+        /**
+         * 过去12个月打印金额
+         * 折线图或者柱状图
+         *
+         *
+         */
+
+        var data2 = [
+            { group: '打印金额', name: '1月', value: 0 },
+            { group: '打印金额', name: '2月', value: 0 },
+            { group: '打印金额', name: '3月', value: 0 },
+            { group: '打印金额', name: '4月', value: 0 },
+            { group: '打印金额', name: '5月', value: 0 },
+            { group: '打印金额', name: '6月', value: 0 },
+            { group: '打印金额', name: '7月', value: 500 },
+            { group: '打印金额', name: '8月', value: 600 },
+            { group: '打印金额', name: '9月', value: 800 },
+            { group: '打印金额', name: '10月', value: 3000 },
+            { group: '打印金额', name: '11月', value: 5000 },
+            { group: '打印金额', name: '12月', value: 8000 },
+
+        ];
+        //柱状图
+        var opt2 = MyECharts.ChartOptionTemplates.Bar('过去12个月打印金额', '页', data2);
+        MyECharts.RenderChart(opt2, 'container2');
+        //折线图
+//        var opt2 = MyECharts.ChartOptionTemplates.Line('过去12个月打印金额', '页', data2);
+//        MyECharts.RenderChart(opt2, 'container2');
+
+        /**
+         * 过去12个月用户数量
+         * 折线图或者柱状图
+         *
+         * 
+         */
+
+        var data3 = [
+            { group: '用户数量', name: '1月', value: 0 },
+            { group: '用户数量', name: '2月', value: 0 },
+            { group: '用户数量', name: '3月', value: 0 },
+            { group: '用户数量', name: '4月', value: 0 },
+            { group: '用户数量', name: '5月', value: 0 },
+            { group: '用户数量', name: '6月', value: 0 },
+            { group: '用户数量', name: '7月', value: 100 },
+            { group: '用户数量', name: '8月', value: 200 },
+            { group: '用户数量', name: '9月', value: 400 },
+            { group: '用户数量', name: '10月', value: 600 },
+            { group: '用户数量', name: '11月', value: 1000 },
+            { group: '用户数量', name: '12月', value: 4000 },
+
+        ];
+        //柱状图
+//        var opt3 = MyECharts.ChartOptionTemplates.Bar('过去12个月用户数量', '人', data3);
+//        MyECharts.RenderChart(opt3, 'container2');
+        //折线图
+          var opt3 = MyECharts.ChartOptionTemplates.Line('过去12个月用户数量', '人', data3);
+          MyECharts.RenderChart(opt3, 'container3');
+
+        /**
+         * 过去12个月店铺数量
+         * 折线图或者柱状图
+         */
+        var data4 = [
+            { group: '店铺数量', name: '1月', value: 0 },
+            { group: '店铺数量', name: '2月', value: 0 },
+            { group: '店铺数量', name: '3月', value: 0 },
+            { group: '店铺数量', name: '4月', value: 0 },
+            { group: '店铺数量', name: '5月', value: 0 },
+            { group: '店铺数量', name: '6月', value: 0 },
+            { group: '店铺数量', name: '7月', value: 10 },
+            { group: '店铺数量', name: '8月', value: 40 },
+            { group: '店铺数量', name: '9月', value: 60 },
+            { group: '店铺数量', name: '10月', value: 80 },
+            { group: '店铺数量', name: '11月', value: 100 },
+            { group: '店铺数量', name: '12月', value: 140 },
+        ];
+        //柱状图
+        var opt4 = MyECharts.ChartOptionTemplates.Bar('过去12个月店铺数量', '人', data4);
+        MyECharts.RenderChart(opt4, 'container4');
+        //折线图
+//        var opt4 = MyECharts.ChartOptionTemplates.Line('过去12个月店铺数量', '人', data4);
+//        MyECharts.RenderChart(opt4, 'container4');
+
+        /**
+         * 各省市自治区打印数量
+         * 中国地图
+         */
+        var data5 =[
+            {name: '北京',value: 1000},
+//            {name: '天津',value: 0},
+            {name: '上海',value: 1000},
+//            {name: '重庆',value: 0},
+//            {name: '河北',value: 0},
+//            {name: '河南',value: 0},
+//            {name: '云南',value: 0},
+//            {name: '辽宁',value: 0},
+//            {name: '黑龙江',value: 0},
+//            {name: '湖南',value: 0},
+            {name: '安徽',value: 500},
+//            {name: '山东',value: 0},
+//            {name: '新疆',value: 0},
+//            {name: '江苏',value: 0},
+            {name: '浙江',value: 5000},
+//            {name: '江西',value: 0},
+//            {name: '湖北',value: 0},
+//            {name: '广西',value: 0},
+//            {name: '甘肃',value: 0},
+//            {name: '山西',value: 0},
+//            {name: '内蒙古',value: 0},
+//            {name: '陕西',value: 0},
+//            {name: '吉林',value: 0},
+//            {name: '福建',value: 0},
+//            {name: '贵州',value: 0},
+//            {name: '广东',value: 0},
+//            {name: '青海',value: 0},
+//            {name: '西藏',value: 0},
+//            {name: '四川',value: 0},
+//            {name: '宁夏',value: 0},
+//            {name: '海南',value: 0},
+//            {name: '台湾',value: 0},
+//            {name: '香港',value: 0},
+//            {name: '澳门',value: 0}
+        ];
+        var opt5 = MyECharts.ChartOptionTemplates.ChinaMap('各省市自治区打印数量', '', data5);
+        MyECharts.RenderChart(opt5, 'container5');
+
+        /**
+         * 各文件类型打印页数
+         * 饼图
+         *
+         *
+         */
+
+        var data6 = [
+                { name: '图片', value: 3000 },
+                { name: 'pdf', value: 1000 },
+                { name: 'doc', value: 100 },
+                { name: 'docx', value: 200 },
+                { name: 'ppt', value: 50 },
+                { name: 'pptx', value: 89 },
+                { name: 'xls', value: 20 },
+                { name: 'xlsx', value: 10 },
+            ];
+        var opt6 = MyECharts.ChartOptionTemplates.Pie('各文件类型打印页数', '页', data6);
+        MyECharts.RenderChart(opt6, 'container6');
+
+    </script>
+
+
+</body>
